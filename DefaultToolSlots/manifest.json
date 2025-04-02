@@ -1,0 +1,10 @@
+﻿{
+	"Name": "Default Tool Slots",
+	"Author": "Freaksaus",
+	"Version": "1.0.0",
+	"Description": "Set default toolbar slots for all your tools",
+	"UniqueID": "freaksaus.defaulttoolslots",
+	"EntryDll": "DefaultToolSlots.dll",
+	"MinimumApiVersion": "4.0.0",
+	"UpdateKeys": [ "Nexus:32867" ]
+}

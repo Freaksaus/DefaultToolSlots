@@ -1,0 +1,18 @@
+{
+  "toggle-enabled-key": "Toggle enabled hotkey",
+  "toggle-enabled-key-tooltip": "Sets a hotkey for enabling the mod",
+  "enabled": "Enabled",
+  "enabled-tooltip": "Enabled",
+  "wateringcan-slot": "Watering Can Slot",
+  "wateringcan-slot-tooltip": "The slot where the Watering Can should be placed.",
+  "hoe-slot": "Hoe Slot",
+  "hoe-slot-tooltip": "The slot where the Hoe should be placed.",
+  "axe-slot": "Axe Slot",
+  "axe-slot-tooltip": "The slot where the Axe should be placed.",
+  "pickaxe-slot": "Pickaxe Slo",
+  "pickaxe-slot-tooltip": "The slot where the Pickaxe should be placed.",
+  "scythe-slot": "Scthe Slot",
+  "scythe-slot-tooltip": "The slot where the Scythe should be placed.",
+  "fishingrod-slot": "Fishing Rod Slot",
+  "fishingrod-slot-tooltip": "The slot where the Fishing Rod should be placed."
+}
