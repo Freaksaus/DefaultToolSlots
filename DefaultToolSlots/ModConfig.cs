@@ -46,4 +46,9 @@ internal sealed class ModConfig
     /// Toolbar slot for fishing rod (1-12)
     /// </summary>
     public int FishingRod { get; set; } = 1;
+
+    /// <summary>
+    /// Toolbar slot for return scepter (1-12)
+    /// </summary>
+    public int ReturnScepterSlot { get; set; } = 1;
 }

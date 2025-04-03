@@ -14,5 +14,7 @@
   "scythe-slot": "Scythe Slot",
   "scythe-slot-tooltip": "The slot where the Scythe should be placed.",
   "fishingrod-slot": "Fishing Rod Slot",
-  "fishingrod-slot-tooltip": "The slot where the Fishing Rod should be placed."
+  "fishingrod-slot-tooltip": "The slot where the Fishing Rod should be placed.",
+  "returnscepter-slot": "Return Scepter Slot",
+  "returnscepter-slot-tooltip": "The slot where the Return Scepter should be placed."
 }

@@ -11,6 +11,8 @@ internal sealed class ModEntry : Mod
 {
     private ModConfig Config { get; set; } = new ModConfig();
 
+    private const string RETURN_SCEPTER_ID = "ReturnScepter";
+
     public override void Entry(IModHelper helper)
     {
         Config = helper.ReadConfig<ModConfig>();
@@ -114,6 +116,16 @@ internal sealed class ModEntry : Mod
             min: 1,
             max: 12
         );
+
+        configMenu.AddNumberOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("returnscepter-slot"),
+            tooltip: () => Helper.Translation.Get("returnscepter-slot-tooltip"),
+            getValue: () => this.Config.ReturnScepterSlot,
+            setValue: value => this.Config.ReturnScepterSlot = value,
+            min: 1,
+            max: 12
+        );
     }
 
     private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -173,6 +185,12 @@ internal sealed class ModEntry : Mod
                     break;
                 case FishingRod:
                     SetToolToToolbarSlot(tool, Config.FishingRod);
+                    break;
+                case Wand:
+                    if (tool.ItemId == RETURN_SCEPTER_ID)
+                    {
+                        SetToolToToolbarSlot(tool, Config.ReturnScepterSlot);
+                    }
                     break;
             }
         }
