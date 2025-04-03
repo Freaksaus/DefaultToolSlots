@@ -51,4 +51,9 @@ internal sealed class ModConfig
     /// Toolbar slot for return scepter (1-12)
     /// </summary>
     public int ReturnScepterSlot { get; set; } = 1;
+
+    /// <summary>
+    /// Toolbar slot for pan (1-12)
+    /// </summary>
+    public int PanSlot { get; set; } = 1;
 }

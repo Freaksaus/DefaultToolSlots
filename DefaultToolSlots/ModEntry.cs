@@ -126,6 +126,16 @@ internal sealed class ModEntry : Mod
             min: 1,
             max: 12
         );
+
+        configMenu.AddNumberOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("pan-slot"),
+            tooltip: () => Helper.Translation.Get("pan-slot-tooltip"),
+            getValue: () => this.Config.PanSlot,
+            setValue: value => this.Config.PanSlot = value,
+            min: 1,
+            max: 12
+        );
     }
 
     private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -194,6 +204,9 @@ internal sealed class ModEntry : Mod
                     {
                         SetToolToToolbarSlot(tool, Config.ReturnScepterSlot);
                     }
+                    break;
+                case Pan:
+                    SetToolToToolbarSlot(tool, Config.PanSlot);
                     break;
             }
         }
