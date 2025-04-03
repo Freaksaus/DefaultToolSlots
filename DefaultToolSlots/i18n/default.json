@@ -18,5 +18,7 @@
   "returnscepter-slot": "Return Scepter Slot",
   "returnscepter-slot-tooltip": "The slot where the Return Scepter should be placed.",
   "pan-slot": "Pan Slot",
-  "pan-slot-tooltip": "The slot where the Pan should be placed."
+  "pan-slot-tooltip": "The slot where the Pan should be placed.",
+  "meleeweapon-slot": "Weapon Slot",
+  "meleeweapon-slot-tooltip": "The slot where the Weapon should be placed."
 }

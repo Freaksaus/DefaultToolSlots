@@ -153,6 +153,16 @@ internal sealed class ModEntry : Mod
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
+
+        configMenu.AddNumberOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("meleeweapon-slot"),
+            tooltip: () => Helper.Translation.Get("meleeweapon-slot-tooltip"),
+            getValue: () => Config.MeleeWeaponSlot,
+            setValue: value => Config.MeleeWeaponSlot = value,
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
+        );
     }
 
     private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -216,6 +226,10 @@ internal sealed class ModEntry : Mod
                         tool.ItemId == MeleeWeapon.iridiumScytheID)
                     {
                         SetToolToToolbarSlot(tool, Config.ScytheSlot);
+                    }
+                    else
+                    {
+                        SetToolToToolbarSlot(tool, Config.MeleeWeaponSlot);
                     }
                     break;
                 case FishingRod:

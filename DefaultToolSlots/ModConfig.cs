@@ -18,42 +18,47 @@ internal sealed class ModConfig
     public bool Enabled { get; set; } = true;
 
     /// <summary>
-    /// Toolbar slot for watering can (1-12)
+    /// Toolbar slot for watering can
     /// </summary>
     public int WateringCanSlot { get; set; } = 1;
 
     /// <summary>
-    /// Toolbar slot for hoe (1-12)
+    /// Toolbar slot for hoe
     /// </summary>
     public int HoeToolbarSlot { get; set; } = 1;
 
     /// <summary>
-    /// Toolbar slot for axe (1-12)
+    /// Toolbar slot for axe
     /// </summary>
     public int AxeToolbarSlot { get; set; } = 1;
 
     /// <summary>
-    /// Toolbar slot for pickaxe (1-12)
+    /// Toolbar slot for pickaxe
     /// </summary>
     public int PickAxeSlot { get; set; } = 1;
 
     /// <summary>
-    /// Toolbar slot for scythe (1-12)
+    /// Toolbar slot for scythe
     /// </summary>
     public int ScytheSlot { get; set; } = 1;
 
     /// <summary>
-    /// Toolbar slot for fishing rod (1-12)
+    /// Toolbar slot for fishing rod
     /// </summary>
     public int FishingRod { get; set; } = 1;
 
     /// <summary>
-    /// Toolbar slot for return scepter (1-12)
+    /// Toolbar slot for return scepter
     /// </summary>
     public int ReturnScepterSlot { get; set; } = 1;
 
     /// <summary>
-    /// Toolbar slot for pan (1-12)
+    /// Toolbar slot for pan
     /// </summary>
     public int PanSlot { get; set; } = 1;
+
+    /// <summary>
+    /// Toolbar slot for melee weapon
+    /// </summary>
+    public int MeleeWeaponSlot { get; set; } = 1;
 }
