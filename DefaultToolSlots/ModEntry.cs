@@ -12,6 +12,8 @@ internal sealed class ModEntry : Mod
     private ModConfig Config { get; set; } = new ModConfig();
 
     private const string RETURN_SCEPTER_ID = "ReturnScepter";
+    private const int MINIMUM_TOOL_SLOT = 1;
+    private const int MAXIMUM_TOOL_SLOT = 36;
 
     public override void Entry(IModHelper helper)
     {
@@ -63,8 +65,8 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("wateringcan-slot-tooltip"),
             getValue: () => this.Config.WateringCanSlot,
             setValue: value => this.Config.WateringCanSlot = value,
-            min: 1,
-            max: 12
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
         );
 
         configMenu.AddNumberOption(
@@ -73,8 +75,8 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("hoe-slot-tooltip"),
             getValue: () => this.Config.HoeToolbarSlot,
             setValue: value => this.Config.HoeToolbarSlot = value,
-            min: 1,
-            max: 12
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
         );
 
         configMenu.AddNumberOption(
@@ -83,8 +85,8 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("axe-slot-tooltip"),
             getValue: () => this.Config.AxeToolbarSlot,
             setValue: value => this.Config.AxeToolbarSlot = value,
-            min: 1,
-            max: 12
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
         );
 
         configMenu.AddNumberOption(
@@ -93,8 +95,8 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("pickaxe-slot-tooltip"),
             getValue: () => this.Config.PickAxeSlot,
             setValue: value => this.Config.PickAxeSlot = value,
-            min: 1,
-            max: 12
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
         );
 
         configMenu.AddNumberOption(
@@ -103,8 +105,8 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("scythe-slot-tooltip"),
             getValue: () => this.Config.ScytheSlot,
             setValue: value => this.Config.ScytheSlot = value,
-            min: 1,
-            max: 12
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
         );
 
         configMenu.AddNumberOption(
@@ -113,8 +115,8 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("fishingrod-slot-tooltip"),
             getValue: () => this.Config.FishingRod,
             setValue: value => this.Config.FishingRod = value,
-            min: 1,
-            max: 12
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
         );
 
         configMenu.AddNumberOption(
@@ -123,8 +125,8 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("returnscepter-slot-tooltip"),
             getValue: () => this.Config.ReturnScepterSlot,
             setValue: value => this.Config.ReturnScepterSlot = value,
-            min: 1,
-            max: 12
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
         );
 
         configMenu.AddNumberOption(
@@ -133,8 +135,8 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("pan-slot-tooltip"),
             getValue: () => this.Config.PanSlot,
             setValue: value => this.Config.PanSlot = value,
-            min: 1,
-            max: 12
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
         );
     }
 
@@ -221,7 +223,7 @@ internal sealed class ModEntry : Mod
 
         var currentInventoryIndex = Game1.player.getIndexOfInventoryItem(tool);
         var defaultInventoryIndex = slot.Value - 1;
-        if (currentInventoryIndex == defaultInventoryIndex)
+        if (currentInventoryIndex == defaultInventoryIndex || defaultInventoryIndex > Game1.player.Items.Count)
         {
             return;
         }
