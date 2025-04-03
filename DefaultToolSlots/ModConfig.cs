@@ -106,4 +106,14 @@ internal sealed class ModConfig
     /// Toolbar slot for melee weapon
     /// </summary>
     public int MeleeWeaponSlot { get; set; } = 1;
+
+    /// <summary>
+    /// Is swapping enabled for slingshot
+    /// </summary>
+    public bool SlingshotEnabled { get; set; } = true;
+
+    /// <summary>
+    /// Toolbar slot for slingshot
+    /// </summary>
+    public int SlingshotSlot { get; set; } = 1;
 }

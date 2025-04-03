@@ -225,6 +225,23 @@ internal sealed class ModEntry : Mod
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
+
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("slingshot-enabled"),
+            getValue: () => Config.SlingshotEnabled,
+            setValue: value => Config.SlingshotEnabled = value
+        );
+
+        configMenu.AddNumberOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("slingshot-slot"),
+            tooltip: () => Helper.Translation.Get("slingshot-slot-tooltip"),
+            getValue: () => Config.SlingshotSlot,
+            setValue: value => Config.SlingshotSlot = value,
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
+        );
     }
 
     private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -331,6 +348,12 @@ internal sealed class ModEntry : Mod
                     if (Config.PanEnabled)
                     {
                         SetToolToToolbarSlot(tool, Config.PanSlot);
+                    }
+                    break;
+                case StardewValley.Tools.Slingshot:
+                    if (Config.SlingshotEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.SlingshotSlot);
                     }
                     break;
             }
