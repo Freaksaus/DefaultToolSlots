@@ -57,7 +57,6 @@ internal sealed class ModEntry : Mod
 
         Config = Helper.ReadConfig<ModConfig>();
 
-        // add some config options
         configMenu.AddBoolOption(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("enabled"),
@@ -74,6 +73,13 @@ internal sealed class ModEntry : Mod
             setValue: value => Config.ToggleEnabledKey = value
         );
 
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("wateringcan-enabled"),
+            getValue: () => Config.WateringCanEnabled,
+            setValue: value => Config.WateringCanEnabled = value
+        );
+
         configMenu.AddNumberOption(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("wateringcan-slot"),
@@ -82,6 +88,13 @@ internal sealed class ModEntry : Mod
             setValue: value => Config.WateringCanSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
+        );
+
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("hoe-enabled"),
+            getValue: () => Config.HoeEnabled,
+            setValue: value => Config.HoeEnabled = value
         );
 
         configMenu.AddNumberOption(
@@ -94,6 +107,13 @@ internal sealed class ModEntry : Mod
             max: MAXIMUM_TOOL_SLOT
         );
 
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("axe-enabled"),
+            getValue: () => Config.AxeEnabled,
+            setValue: value => Config.AxeEnabled = value
+        );
+
         configMenu.AddNumberOption(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("axe-slot"),
@@ -102,6 +122,13 @@ internal sealed class ModEntry : Mod
             setValue: value => Config.AxeToolbarSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
+        );
+
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("pickaxe-enabled"),
+            getValue: () => Config.PickaxeEnabled,
+            setValue: value => Config.PickaxeEnabled = value
         );
 
         configMenu.AddNumberOption(
@@ -114,6 +141,13 @@ internal sealed class ModEntry : Mod
             max: MAXIMUM_TOOL_SLOT
         );
 
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("scythe-enabled"),
+            getValue: () => Config.ScytheEnabled,
+            setValue: value => Config.ScytheEnabled = value
+        );
+
         configMenu.AddNumberOption(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("scythe-slot"),
@@ -122,6 +156,13 @@ internal sealed class ModEntry : Mod
             setValue: value => Config.ScytheSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
+        );
+
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("fishingrod-enabled"),
+            getValue: () => Config.FishingRodEnabled,
+            setValue: value => Config.FishingRodEnabled = value
         );
 
         configMenu.AddNumberOption(
@@ -134,6 +175,13 @@ internal sealed class ModEntry : Mod
             max: MAXIMUM_TOOL_SLOT
         );
 
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("returnscepter-enabled"),
+            getValue: () => Config.ReturnScepterEnabled,
+            setValue: value => Config.ReturnScepterEnabled = value
+        );
+
         configMenu.AddNumberOption(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("returnscepter-slot"),
@@ -144,6 +192,13 @@ internal sealed class ModEntry : Mod
             max: MAXIMUM_TOOL_SLOT
         );
 
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("pan-enabled"),
+            getValue: () => Config.PanEnabled,
+            setValue: value => Config.PanEnabled = value
+        );
+
         configMenu.AddNumberOption(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("pan-slot"),
@@ -152,6 +207,13 @@ internal sealed class ModEntry : Mod
             setValue: value => Config.PanSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
+        );
+
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("meleeweapon-enabled"),
+            getValue: () => Config.MeleeWeaponEnabled,
+            setValue: value => Config.MeleeWeaponEnabled = value
         );
 
         configMenu.AddNumberOption(
@@ -209,40 +271,67 @@ internal sealed class ModEntry : Mod
             switch (tool)
             {
                 case WateringCan:
-                    SetToolToToolbarSlot(tool, Config.WateringCanSlot);
+                    if (Config.WateringCanEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.WateringCanSlot);
+                    }
                     break;
                 case Hoe:
-                    SetToolToToolbarSlot(tool, Config.HoeToolbarSlot);
+                    if (Config.HoeEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.HoeToolbarSlot);
+                    }
                     break;
                 case Axe:
-                    SetToolToToolbarSlot(tool, Config.AxeToolbarSlot);
+                    if (Config.AxeEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.AxeToolbarSlot);
+                    }
                     break;
                 case Pickaxe:
-                    SetToolToToolbarSlot(tool, Config.PickAxeSlot);
+                    if (Config.PickaxeEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.PickAxeSlot);
+                    }
                     break;
                 case MeleeWeapon:
                     if (tool.ItemId == MeleeWeapon.scytheId ||
                         tool.ItemId == MeleeWeapon.goldenScytheId ||
                         tool.ItemId == MeleeWeapon.iridiumScytheID)
                     {
-                        SetToolToToolbarSlot(tool, Config.ScytheSlot);
+                        if (Config.ScytheEnabled)
+                        {
+                            SetToolToToolbarSlot(tool, Config.ScytheSlot);
+                        }
                     }
                     else
                     {
-                        SetToolToToolbarSlot(tool, Config.MeleeWeaponSlot);
+                        if (Config.MeleeWeaponEnabled)
+                        {
+                            SetToolToToolbarSlot(tool, Config.MeleeWeaponSlot);
+                        }
                     }
                     break;
                 case FishingRod:
-                    SetToolToToolbarSlot(tool, Config.FishingRod);
+                    if (Config.FishingRodEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.FishingRod);
+                    }
                     break;
                 case Wand:
                     if (tool.ItemId == RETURN_SCEPTER_ID)
                     {
-                        SetToolToToolbarSlot(tool, Config.ReturnScepterSlot);
+                        if (Config.ReturnScepterEnabled)
+                        {
+                            SetToolToToolbarSlot(tool, Config.ReturnScepterSlot);
+                        }
                     }
                     break;
                 case Pan:
-                    SetToolToToolbarSlot(tool, Config.PanSlot);
+                    if (Config.PanEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.PanSlot);
+                    }
                     break;
             }
         }
