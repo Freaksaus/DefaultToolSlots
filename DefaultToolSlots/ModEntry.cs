@@ -148,6 +148,9 @@ internal sealed class ModEntry : Mod
         if (this.Config.ToggleEnabledKey.IsDown())
         {
             Config.Enabled = !Config.Enabled;
+            Game1.addHUDMessage(new(
+                $"Default Tool Slots is now {(Config.Enabled ? "enabled" : "disabled")})",
+                HUDMessage.newQuest_type));
         }
     }
 
