@@ -1,4 +1,5 @@
 ﻿using GenericModConfigMenu;
+using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
@@ -9,7 +10,7 @@ namespace DefaultToolSlots;
 /// <summary>The mod entry point.</summary>
 internal sealed class ModEntry : Mod
 {
-    private ModConfig Config { get; set; } = new ModConfig();
+    private static ModConfig Config { get; set; } = new ModConfig();
 
     private const string RETURN_SCEPTER_ID = "ReturnScepter";
     private const int MINIMUM_TOOL_SLOT = 1;
@@ -17,11 +18,25 @@ internal sealed class ModEntry : Mod
 
     public override void Entry(IModHelper helper)
     {
+        Harmony harmony = new(Helper.ModRegistry.ModID);
+
+        harmony.Patch(
+               original: AccessTools.Method(typeof(Farmer), nameof(Farmer.shiftToolbar)),
+               postfix: new HarmonyMethod(typeof(ModEntry), nameof(ShiftToolbar_Postfix))
+           );
+
         Config = helper.ReadConfig<ModConfig>();
 
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
         helper.Events.Player.InventoryChanged += OnPlayerInventoryChanged;
         helper.Events.Input.ButtonPressed += OnButtonPressed;
+    }
+
+#pragma warning disable IDE0060 // Remove unused parameter
+    private static void ShiftToolbar_Postfix(ref bool right)
+#pragma warning restore IDE0060 // Remove unused parameter
+    {
+        SortTools(Game1.player);
     }
 
     private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
@@ -36,11 +51,11 @@ internal sealed class ModEntry : Mod
         // register mod
         configMenu.Register(
             mod: this.ModManifest,
-            reset: () => this.Config = new ModConfig(),
-            save: () => this.Helper.WriteConfig(this.Config)
+            reset: () => Config = new ModConfig(),
+            save: () => this.Helper.WriteConfig(Config)
         );
 
-        this.Config = Helper.ReadConfig<ModConfig>();
+        Config = Helper.ReadConfig<ModConfig>();
 
         // add some config options
         configMenu.AddBoolOption(
@@ -48,23 +63,23 @@ internal sealed class ModEntry : Mod
             name: () => Helper.Translation.Get("enabled"),
             tooltip: () => Helper.Translation.Get("enabled-tooltip"),
             getValue: () => Config.Enabled,
-            setValue: value => this.Config.Enabled = value
+            setValue: value => Config.Enabled = value
         );
 
         configMenu.AddKeybindList(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("toggle-enabled-key"),
             tooltip: () => Helper.Translation.Get("toggle-enabled-key-tooltip"),
-            getValue: () => this.Config.ToggleEnabledKey,
-            setValue: value => this.Config.ToggleEnabledKey = value
+            getValue: () => Config.ToggleEnabledKey,
+            setValue: value => Config.ToggleEnabledKey = value
         );
 
         configMenu.AddNumberOption(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("wateringcan-slot"),
             tooltip: () => Helper.Translation.Get("wateringcan-slot-tooltip"),
-            getValue: () => this.Config.WateringCanSlot,
-            setValue: value => this.Config.WateringCanSlot = value,
+            getValue: () => Config.WateringCanSlot,
+            setValue: value => Config.WateringCanSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
@@ -73,8 +88,8 @@ internal sealed class ModEntry : Mod
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("hoe-slot"),
             tooltip: () => Helper.Translation.Get("hoe-slot-tooltip"),
-            getValue: () => this.Config.HoeToolbarSlot,
-            setValue: value => this.Config.HoeToolbarSlot = value,
+            getValue: () => Config.HoeToolbarSlot,
+            setValue: value => Config.HoeToolbarSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
@@ -83,8 +98,8 @@ internal sealed class ModEntry : Mod
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("axe-slot"),
             tooltip: () => Helper.Translation.Get("axe-slot-tooltip"),
-            getValue: () => this.Config.AxeToolbarSlot,
-            setValue: value => this.Config.AxeToolbarSlot = value,
+            getValue: () => Config.AxeToolbarSlot,
+            setValue: value => Config.AxeToolbarSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
@@ -93,8 +108,8 @@ internal sealed class ModEntry : Mod
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("pickaxe-slot"),
             tooltip: () => Helper.Translation.Get("pickaxe-slot-tooltip"),
-            getValue: () => this.Config.PickAxeSlot,
-            setValue: value => this.Config.PickAxeSlot = value,
+            getValue: () => Config.PickAxeSlot,
+            setValue: value => Config.PickAxeSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
@@ -103,8 +118,8 @@ internal sealed class ModEntry : Mod
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("scythe-slot"),
             tooltip: () => Helper.Translation.Get("scythe-slot-tooltip"),
-            getValue: () => this.Config.ScytheSlot,
-            setValue: value => this.Config.ScytheSlot = value,
+            getValue: () => Config.ScytheSlot,
+            setValue: value => Config.ScytheSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
@@ -113,8 +128,8 @@ internal sealed class ModEntry : Mod
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("fishingrod-slot"),
             tooltip: () => Helper.Translation.Get("fishingrod-slot-tooltip"),
-            getValue: () => this.Config.FishingRod,
-            setValue: value => this.Config.FishingRod = value,
+            getValue: () => Config.FishingRod,
+            setValue: value => Config.FishingRod = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
@@ -123,8 +138,8 @@ internal sealed class ModEntry : Mod
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("returnscepter-slot"),
             tooltip: () => Helper.Translation.Get("returnscepter-slot-tooltip"),
-            getValue: () => this.Config.ReturnScepterSlot,
-            setValue: value => this.Config.ReturnScepterSlot = value,
+            getValue: () => Config.ReturnScepterSlot,
+            setValue: value => Config.ReturnScepterSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
@@ -133,8 +148,8 @@ internal sealed class ModEntry : Mod
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("pan-slot"),
             tooltip: () => Helper.Translation.Get("pan-slot-tooltip"),
-            getValue: () => this.Config.PanSlot,
-            setValue: value => this.Config.PanSlot = value,
+            getValue: () => Config.PanSlot,
+            setValue: value => Config.PanSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
@@ -157,7 +172,7 @@ internal sealed class ModEntry : Mod
             return;
         }
 
-        if (this.Config.ToggleEnabledKey.IsDown())
+        if (Config.ToggleEnabledKey.IsDown())
         {
             Config.Enabled = !Config.Enabled;
             Game1.addHUDMessage(new(
@@ -168,12 +183,17 @@ internal sealed class ModEntry : Mod
 
     private void OnPlayerInventoryChanged(object? sender, InventoryChangedEventArgs e)
     {
+        SortTools(e.Player);
+    }
+
+    private static void SortTools(Farmer farmer)
+    {
         if (Config is null || !Config.Enabled)
         {
             return;
         }
 
-        var tools = e.Player.Items.Where(x => x is Tool);
+        var tools = farmer.Items.Where(x => x is Tool);
         foreach (var tool in tools)
         {
             switch (tool)
