@@ -74,6 +74,11 @@ internal sealed class ModEntry : Mod
             setValue: value => Config.ToggleEnabledKey = value
         );
 
+        configMenu.AddSectionTitle(
+            mod: this.ModManifest,
+            text: () => Helper.Translation.Get("tools-section-title")
+        );
+
         configMenu.AddBoolOption(
             mod: this.ModManifest,
             name: () => Helper.Translation.Get("wateringcan-enabled"),
@@ -178,23 +183,6 @@ internal sealed class ModEntry : Mod
 
         configMenu.AddBoolOption(
             mod: this.ModManifest,
-            name: () => Helper.Translation.Get("returnscepter-enabled"),
-            getValue: () => Config.ReturnScepterEnabled,
-            setValue: value => Config.ReturnScepterEnabled = value
-        );
-
-        configMenu.AddNumberOption(
-            mod: this.ModManifest,
-            name: () => Helper.Translation.Get("returnscepter-slot"),
-            tooltip: () => Helper.Translation.Get("returnscepter-slot-tooltip"),
-            getValue: () => Config.ReturnScepterSlot,
-            setValue: value => Config.ReturnScepterSlot = value,
-            min: MINIMUM_TOOL_SLOT,
-            max: MAXIMUM_TOOL_SLOT
-        );
-
-        configMenu.AddBoolOption(
-            mod: this.ModManifest,
             name: () => Helper.Translation.Get("pan-enabled"),
             getValue: () => Config.PanEnabled,
             setValue: value => Config.PanEnabled = value
@@ -208,6 +196,12 @@ internal sealed class ModEntry : Mod
             setValue: value => Config.PanSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
+        );
+
+
+        configMenu.AddSectionTitle(
+            mod: this.ModManifest,
+            text: () => Helper.Translation.Get("weapons-section-title")
         );
 
         configMenu.AddBoolOption(
@@ -240,6 +234,28 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("slingshot-slot-tooltip"),
             getValue: () => Config.SlingshotSlot,
             setValue: value => Config.SlingshotSlot = value,
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
+        );
+
+        configMenu.AddSectionTitle(
+            mod: this.ModManifest,
+            text: () => Helper.Translation.Get("other-section-title")
+        );
+
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("returnscepter-enabled"),
+            getValue: () => Config.ReturnScepterEnabled,
+            setValue: value => Config.ReturnScepterEnabled = value
+        );
+
+        configMenu.AddNumberOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("returnscepter-slot"),
+            tooltip: () => Helper.Translation.Get("returnscepter-slot-tooltip"),
+            getValue: () => Config.ReturnScepterSlot,
+            setValue: value => Config.ReturnScepterSlot = value,
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );

@@ -35,5 +35,8 @@
   "slingshot-slot-tooltip": "The slot where the Slingshot should be placed.",
   "horseflute-enabled": "Sort Horse Flute",
   "horseflute-slot": "Horse Flute Slot",
-  "horseflute-slot-tooltip": "The slot where the Horse Flute should be placed."
+  "horseflute-slot-tooltip": "The slot where the Horse Flute should be placed.",
+  "tools-section-title": "Tools",
+  "weapons-section-title": "Weapons",
+  "other-section-title": "Other"
 }
