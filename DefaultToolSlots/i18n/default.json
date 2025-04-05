@@ -32,5 +32,8 @@
   "meleeweapon-slot-tooltip": "The slot where the Melee Weapon should be placed.",
   "slingshot-enabled": "Sort Slingshot",
   "slingshot-slot": "Slingshot Slot",
-  "slingshot-slot-tooltip": "The slot where the Slingshot should be placed."
+  "slingshot-slot-tooltip": "The slot where the Slingshot should be placed.",
+  "horseflute-enabled": "Sort Horse Flute",
+  "horseflute-slot": "Horse Flute Slot",
+  "horseflute-slot-tooltip": "The slot where the Horse Flute should be placed."
 }

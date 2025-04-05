@@ -13,6 +13,7 @@ internal sealed class ModEntry : Mod
     private static ModConfig Config { get; set; } = new ModConfig();
 
     private const string RETURN_SCEPTER_ID = "ReturnScepter";
+    private const string HORSE_FLUTE_ID = "911";
     private const int MINIMUM_TOOL_SLOT = 1;
     private const int MAXIMUM_TOOL_SLOT = 36;
 
@@ -242,6 +243,23 @@ internal sealed class ModEntry : Mod
             min: MINIMUM_TOOL_SLOT,
             max: MAXIMUM_TOOL_SLOT
         );
+
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("horseflute-enabled"),
+            getValue: () => Config.HorseFluteEnabled,
+            setValue: value => Config.HorseFluteEnabled = value
+        );
+
+        configMenu.AddNumberOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("horseflute-slot"),
+            tooltip: () => Helper.Translation.Get("horseflute-slot-tooltip"),
+            getValue: () => Config.HorseFluteSlot,
+            setValue: value => Config.HorseFluteSlot = value,
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
+        );
     }
 
     private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -282,7 +300,10 @@ internal sealed class ModEntry : Mod
             return;
         }
 
-        var tools = farmer.Items.Where(x => x is Tool);
+        var tools = farmer.Items
+            .Where(x => x is not null)
+            .Where(x => x is Tool || x.ItemId == HORSE_FLUTE_ID);
+
         foreach (var tool in tools)
         {
             switch (tool)
@@ -336,12 +357,9 @@ internal sealed class ModEntry : Mod
                     }
                     break;
                 case Wand:
-                    if (tool.ItemId == RETURN_SCEPTER_ID)
+                    if (tool.ItemId == RETURN_SCEPTER_ID && Config.ReturnScepterEnabled)
                     {
-                        if (Config.ReturnScepterEnabled)
-                        {
-                            SetToolToToolbarSlot(tool, Config.ReturnScepterSlot);
-                        }
+                        SetToolToToolbarSlot(tool, Config.ReturnScepterSlot);
                     }
                     break;
                 case Pan:
@@ -354,6 +372,12 @@ internal sealed class ModEntry : Mod
                     if (Config.SlingshotEnabled)
                     {
                         SetToolToToolbarSlot(tool, Config.SlingshotSlot);
+                    }
+                    break;
+                case StardewValley.Object:
+                    if (Config.HorseFluteEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.HorseFluteSlot);
                     }
                     break;
             }

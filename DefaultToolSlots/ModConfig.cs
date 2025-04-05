@@ -116,4 +116,14 @@ internal sealed class ModConfig
     /// Toolbar slot for slingshot
     /// </summary>
     public int SlingshotSlot { get; set; } = 1;
+
+    /// <summary>
+    /// Is swapping enabled for horse flute
+    /// </summary>
+    public bool HorseFluteEnabled { get; set; } = true;
+
+    /// <summary>
+    /// Toolbar slot for horse flute
+    /// </summary>
+    public int HorseFluteSlot { get; set; } = 1;
 }
