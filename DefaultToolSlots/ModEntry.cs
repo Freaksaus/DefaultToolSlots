@@ -319,6 +319,11 @@ internal sealed class ModEntry : Mod
             Game1.addHUDMessage(new(
                 $"Default Tool Slots is now {(Config.Enabled ? "enabled" : "disabled")})",
                 HUDMessage.newQuest_type));
+
+            if (Config.Enabled)
+            {
+                SortTools(Game1.player);
+            }
         }
     }
 
