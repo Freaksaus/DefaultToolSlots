@@ -18,6 +18,11 @@ internal sealed class ModConfig
     public bool Enabled { get; set; } = true;
 
     /// <summary>
+    /// Keep tools in the same spot even when swapping toolbars
+    /// </summary>
+    public bool KeepToolsWhileSwappingToolbars { get; set; } = false;
+
+    /// <summary>
     /// Is swapping enabled for the watering can
     /// </summary>
     public bool WateringCanEnabled { get; set; } = true;
@@ -126,4 +131,9 @@ internal sealed class ModConfig
     /// Toolbar slot for horse flute
     /// </summary>
     public int HorseFluteSlot { get; set; } = 1;
+
+    /// <summary>
+    /// Index of the currently selected toolbar
+    /// </summary>
+    public int CurrentToolbarIndex { get; set; } = 1;
 }

@@ -38,5 +38,7 @@
   "horseflute-slot-tooltip": "The slot where the Horse Flute should be placed.",
   "tools-section-title": "Tools",
   "weapons-section-title": "Weapons",
-  "other-section-title": "Other"
+  "other-section-title": "Other",
+  "keep-tools-while-swapping-toolbars": "Keep tools while swapping",
+  "keep-tools-while-swapping-toolbars-tooltip": "Keep tools in the selected slots even while swapping toolbars"
 }

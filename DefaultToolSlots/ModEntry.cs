@@ -17,6 +17,7 @@ internal sealed class ModEntry : Mod
     private const string HORSE_FLUTE_ID = "911";
     private const int MINIMUM_TOOL_SLOT = 1;
     private const int MAXIMUM_TOOL_SLOT = 36;
+    private const int TOOLBAR_SLOT_COUNT = 12;
 
     public override void Entry(IModHelper helper)
     {
@@ -43,7 +44,30 @@ internal sealed class ModEntry : Mod
     private static void ShiftToolbar_Postfix(ref bool right)
 #pragma warning restore IDE0060 // Remove unused parameter
     {
+        SetCurrentToolbarIndex(right);
         SortTools(Game1.player);
+    }
+
+    private static void SetCurrentToolbarIndex(bool right)
+    {
+        if (right)
+        {
+            Config.CurrentToolbarIndex--;
+        }
+        else
+        {
+            Config.CurrentToolbarIndex++;
+        }
+
+        var maxToolbarIndex = (Game1.player.Items.Count / TOOLBAR_SLOT_COUNT) - 1;
+        if (Config.CurrentToolbarIndex < 0)
+        {
+            Config.CurrentToolbarIndex = maxToolbarIndex;
+        }
+        else if (Config.CurrentToolbarIndex > maxToolbarIndex)
+        {
+            Config.CurrentToolbarIndex = 0;
+        }
     }
 
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -90,6 +114,14 @@ internal sealed class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("toggle-enabled-key-tooltip"),
             getValue: () => Config.ToggleEnabledKey,
             setValue: value => Config.ToggleEnabledKey = value
+        );
+
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("keep-tools-while-swapping-toolbars"),
+            tooltip: () => Helper.Translation.Get("keep-tools-while-swapping-toolbars-tooltip"),
+            getValue: () => Config.KeepToolsWhileSwappingToolbars,
+            setValue: value => Config.KeepToolsWhileSwappingToolbars = value
         );
 
         configMenu.AddSectionTitle(
@@ -432,6 +464,12 @@ internal sealed class ModEntry : Mod
 
         var currentInventoryIndex = Game1.player.getIndexOfInventoryItem(tool);
         var defaultInventoryIndex = slot.Value - 1;
+
+        if (!Config.KeepToolsWhileSwappingToolbars)
+        {
+            defaultInventoryIndex += Config.CurrentToolbarIndex * TOOLBAR_SLOT_COUNT;
+        }
+
         if (currentInventoryIndex == defaultInventoryIndex || defaultInventoryIndex > Game1.player.Items.Count)
         {
             return;
