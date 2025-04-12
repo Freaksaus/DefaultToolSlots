@@ -3,6 +3,7 @@ using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.Menus;
 using StardewValley.Tools;
 
 namespace DefaultToolSlots;
@@ -26,6 +27,11 @@ internal sealed class ModEntry : Mod
                postfix: new HarmonyMethod(typeof(ModEntry), nameof(ShiftToolbar_Postfix))
            );
 
+        harmony.Patch(
+               original: AccessTools.Method(typeof(ItemGrabMenu), nameof(ItemGrabMenu.organizeItemsInList)),
+               postfix: new HarmonyMethod(typeof(ModEntry), nameof(OrganizeItemsInList_Postfix))
+           );
+
         Config = helper.ReadConfig<ModConfig>();
 
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
@@ -39,6 +45,18 @@ internal sealed class ModEntry : Mod
     {
         SortTools(Game1.player);
     }
+
+#pragma warning disable IDE0060 // Remove unused parameter
+    private static void OrganizeItemsInList_Postfix(ref IList<Item> items)
+    {
+        if (Game1.activeClickableMenu is not GameMenu)
+        {
+            return;
+        }
+
+        SortTools(Game1.player);
+    }
+#pragma warning restore IDE0060 // Remove unused parameter
 
     private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
     {
