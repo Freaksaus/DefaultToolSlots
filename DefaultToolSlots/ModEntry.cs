@@ -457,20 +457,20 @@ internal sealed class ModEntry : Mod
 
     private static void SetToolToToolbarSlot(Item tool, int? slot)
     {
-        if (tool is null || slot is null)
+        if (tool is null || !slot.HasValue)
         {
             return;
         }
 
         var currentInventoryIndex = Game1.player.getIndexOfInventoryItem(tool);
-        var defaultInventoryIndex = slot.Value - 1;
-
+        var defaultInventoryIndex = slot.Value;
         if (!Config.KeepToolsWhileSwappingToolbars)
         {
             defaultInventoryIndex += Config.CurrentToolbarIndex * TOOLBAR_SLOT_COUNT;
         }
 
-        if (currentInventoryIndex == defaultInventoryIndex || defaultInventoryIndex > Game1.player.Items.Count)
+        defaultInventoryIndex -= 1;
+        if (currentInventoryIndex == defaultInventoryIndex || defaultInventoryIndex >= Game1.player.Items.Count)
         {
             return;
         }

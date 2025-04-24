@@ -135,5 +135,5 @@ internal sealed class ModConfig
     /// <summary>
     /// Index of the currently selected toolbar
     /// </summary>
-    public int CurrentToolbarIndex { get; set; } = 1;
+    public int CurrentToolbarIndex { get; set; } = 0;
 }
