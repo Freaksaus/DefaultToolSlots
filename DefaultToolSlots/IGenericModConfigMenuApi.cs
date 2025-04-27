@@ -9,6 +9,7 @@ namespace GenericModConfigMenu;
 /// <summary>The API which lets other mods add a config UI through Generic Mod Config Menu.</summary>
 public interface IGenericModConfigMenuApi
 {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
     /*********
     ** Methods
     *********/
@@ -176,4 +177,5 @@ public interface IGenericModConfigMenuApi
     /// <summary>Remove a mod from the config UI and delete all its options and pages.</summary>
     /// <param name="mod">The mod's manifest.</param>
     void Unregister(IManifest mod);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 }
