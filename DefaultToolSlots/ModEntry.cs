@@ -15,6 +15,9 @@ internal sealed class ModEntry : Mod
 
     private const string RETURN_SCEPTER_ID = "ReturnScepter";
     private const string HORSE_FLUTE_ID = "911";
+    private const string CHERRY_BOMB_ID = "286";
+    private const string BOMB_ID = "287";
+    private const string MEGA_BOMB_ID = "288";
     private const int MINIMUM_TOOL_SLOT = 1;
     private const int MAXIMUM_TOOL_SLOT = 36;
     private const int TOOLBAR_SLOT_COUNT = 12;
@@ -288,6 +291,23 @@ internal sealed class ModEntry : Mod
             max: MAXIMUM_TOOL_SLOT
         );
 
+        configMenu.AddBoolOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("bombs-enabled"),
+            getValue: () => Config.BombsEnabled,
+            setValue: value => Config.BombsEnabled = value
+        );
+
+        configMenu.AddNumberOption(
+            mod: this.ModManifest,
+            name: () => Helper.Translation.Get("bomb-slot"),
+            tooltip: () => Helper.Translation.Get("bomb-slot-tooltip"),
+            getValue: () => Config.BombSlot,
+            setValue: value => Config.BombSlot = value,
+            min: MINIMUM_TOOL_SLOT,
+            max: MAXIMUM_TOOL_SLOT
+        );
+
         configMenu.AddSectionTitle(
             mod: this.ModManifest,
             text: () => Helper.Translation.Get("other-section-title")
@@ -373,7 +393,7 @@ internal sealed class ModEntry : Mod
 
         var tools = farmer.Items
             .Where(x => x is not null)
-            .Where(x => x is Tool || x.ItemId == HORSE_FLUTE_ID);
+            .Where(x => x is Tool || x.ItemId == HORSE_FLUTE_ID || x.ItemId == CHERRY_BOMB_ID || x.ItemId == BOMB_ID || x.ItemId == MEGA_BOMB_ID);
 
         foreach (var tool in tools)
         {
@@ -446,9 +466,13 @@ internal sealed class ModEntry : Mod
                     }
                     break;
                 case StardewValley.Object:
-                    if (Config.HorseFluteEnabled)
+                    if (tool.ItemId == HORSE_FLUTE_ID && Config.HorseFluteEnabled)
                     {
                         SetToolToToolbarSlot(tool, Config.HorseFluteSlot);
+                    }
+                    else if ((tool.ItemId == CHERRY_BOMB_ID || tool.ItemId == BOMB_ID || tool.ItemId == MEGA_BOMB_ID) && Config.BombsEnabled)
+                    {
+                        SetToolToToolbarSlot(tool, Config.BombSlot);
                     }
                     break;
             }

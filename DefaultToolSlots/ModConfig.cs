@@ -133,6 +133,16 @@ internal sealed class ModConfig
     public int HorseFluteSlot { get; set; } = 1;
 
     /// <summary>
+    /// Is swapping enabled for bombs
+    /// </summary>
+    public bool BombsEnabled { get; set; } = false;
+
+    /// <summary>
+    /// Toolbar slot for bombs
+    /// </summary>
+    public int BombSlot { get; set; } = 1;
+
+    /// <summary>
     /// Index of the currently selected toolbar
     /// </summary>
     public int CurrentToolbarIndex { get; set; } = 0;
