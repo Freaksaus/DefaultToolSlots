@@ -1,7 +1,7 @@
 ﻿{
 	"Name": "Default Tool Slots",
 	"Author": "Freaksaus",
-	"Version": "1.0.6",
+	"Version": "1.0.7",
 	"Description": "Set default toolbar slots for all your tools",
 	"UniqueID": "freaksaus.defaulttoolslots",
 	"EntryDll": "DefaultToolSlots.dll",
