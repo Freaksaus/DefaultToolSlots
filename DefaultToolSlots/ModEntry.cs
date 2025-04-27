@@ -43,9 +43,7 @@ internal sealed class ModEntry : Mod
         helper.Events.Input.ButtonPressed += OnButtonPressed;
     }
 
-#pragma warning disable IDE0060 // Remove unused parameter
     private static void ShiftToolbar_Postfix(ref bool right)
-#pragma warning restore IDE0060 // Remove unused parameter
     {
         SetCurrentToolbarIndex(right);
         SortTools(Game1.player);
