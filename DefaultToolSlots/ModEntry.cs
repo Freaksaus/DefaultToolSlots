@@ -392,6 +392,8 @@ internal sealed class ModEntry : Mod
         var tools = farmer.Items
             .Where(x => x is not null)
             .Where(x => x is Tool || x.ItemId == HORSE_FLUTE_ID || x.ItemId == CHERRY_BOMB_ID || x.ItemId == BOMB_ID || x.ItemId == MEGA_BOMB_ID);
+        var hasMultipleScythes = farmer.Items.Count(IsScytheWeapon) > 1;
+        var hasMultipleOtherMeleeWeapons = farmer.Items.Count(x => x is MeleeWeapon weapon && !IsScytheWeapon(weapon)) > 1;
 
         foreach (var tool in tools)
         {
@@ -422,10 +424,13 @@ internal sealed class ModEntry : Mod
                     }
                     break;
                 case MeleeWeapon:
-                    if (tool.ItemId == MeleeWeapon.scytheId ||
-                        tool.ItemId == MeleeWeapon.goldenScytheId ||
-                        tool.ItemId == MeleeWeapon.iridiumScytheID)
+                    if (IsScytheWeapon(tool))
                     {
+                        if (hasMultipleScythes)
+                        {
+                            break;
+                        }
+
                         if (Config.ScytheEnabled)
                         {
                             SetToolToToolbarSlot(tool, Config.ScytheSlot);
@@ -433,6 +438,11 @@ internal sealed class ModEntry : Mod
                     }
                     else
                     {
+                        if (hasMultipleOtherMeleeWeapons)
+                        {
+                            break;
+                        }
+
                         if (Config.MeleeWeaponEnabled)
                         {
                             SetToolToToolbarSlot(tool, Config.MeleeWeaponSlot);
@@ -508,5 +518,13 @@ internal sealed class ModEntry : Mod
         {
             Game1.player.Items[currentInventoryIndex] = null;
         }
+    }
+
+    private static bool IsScytheWeapon(Item item)
+    {
+        return item is MeleeWeapon weapon &&
+            (weapon.ItemId == MeleeWeapon.scytheId ||
+             weapon.ItemId == MeleeWeapon.goldenScytheId ||
+             weapon.ItemId == MeleeWeapon.iridiumScytheID);
     }
 }
